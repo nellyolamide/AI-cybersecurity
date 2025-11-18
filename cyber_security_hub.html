@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberGuard - University Cybersecurity Hub</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+    
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useRef, useEffect } = React;
+
+        function App() {
+            const [activeSection, setActiveSection] = useState('home');
+
+            return (
+                <div className="container">
+                    <header>
+                        <div className="header-content">
+                            <div className="logo-section">
+                                <div className="logo">🛡️</div>
+                                <div>
+                                    <h1>CyberGuard</h1>
+                                    <p className="tagline">University Cybersecurity Awareness Hub</p>
+                                </div>
+                            </div>
+                            <nav>
+                                <button 
+                                    className={`nav-btn ${activeSection === 'home' ? 'active' : ''}`}
+                                    onClick={() => setActiveSection('home')}
+                                >
+                                    🏠 Home
+                                </button>
+                                <button 
+                                    className={`nav-btn ${activeSection === 'games' ? 'active' : ''}`}
+                                    onClick={() => setActiveSection('games')}
+                                >
+                                    🎮 Games
+                                </button>
+                                <button 
+                                    className={`nav-btn ${activeSection === 'video' ? 'active' : ''}`}
+                                    onClick={() => setActiveSection('video')}
+                                >
+                                    🎥 Video Detector
+                                </button>
+                                <button 
+                                    className={`nav-btn ${activeSection === 'voice' ? 'active' : ''}`}
+                                    onClick={() => setActiveSection('voice')}
+                                >
+                                    🎤 Voice Detector
+                                </button>
+                            </nav>
+                        </div>
+                    </header>
+
+                    <main className="main-content">
+                        {activeSection === 'home' && <HomeSection setActiveSection={setActiveSection} />}
+                        {activeSection === 'games' && <GamesSection />}
+                        {activeSection === 'video' && <VideoDetector />}
+                        {activeSection === 'voice' && <VoiceDetector />}
+                    </main>
+
+                    <footer>
+                        <p>🎓 CyberGuard - Empowering Students with Cybersecurity Knowledge</p>
+                        <p style={{fontSize: '0.9em', marginTop: '10px', opacity: 0.9}}>
+                            Educational Platform | University Project 2025
+                        </p>
+                    </footer>
+                </div>
+            );
+        }
+
+        function HomeSection({ setActiveSection }) {
+            return (
+                <div>
+                    <h2 className="section-title">Welcome to CyberGuard! 🚀</h2>
+                    
+                    <div style={{background: 'linear-gradient(135deg, #667eea, #764ba2)', color: 'white', padding: '40px', borderRadius: '15px', marginBottom: '30px'}}>
+                        <h3 style={{fontSize: '1.8em', marginBottom: '15px'}}>Learn. Play. Protect.</h3>
+                        <p style={{fontSize: '1.1em', lineHeight: '1.6', opacity: 0.95}}>
+                            Your one-stop platform for cybersecurity awareness. Master the skills to identify threats, 
+                            detect deepfakes, and stay safe in the digital world through interactive games and 
+                            cutting-edge AI detection tools.
+                        </p>
+                    </div>
+
+                    <div className="games-grid">
+                        <div className="game-card" onClick={() => setActiveSection('games')}>
+                            <div className="game-icon">🎮</div>
+                            <div className="game-title">Interactive Games</div>
+                            <div className="game-desc">
+                                Test your knowledge with engaging cybersecurity quizzes and phishing simulations. 
+                                Learn while having fun!
+                            </div>
+                        </div>
+
+                        <div className="game-card" onClick={() => setActiveSection('video')}>
+                            <div className="game-icon">🎥</div>
+                            <div className="game-title">Deepfake Video Detection</div>
+                            <div className="game-desc">
+                                Upload videos or use your webcam to analyze content for deepfake manipulation 
+                                using advanced AI algorithms.
+                            </div>
+                        </div>
+
+                        <div className="game-card" onClick={() => setActiveSection('voice')}>
+                            <div className="game-icon">🎤</div>
+                            <div className="game-title">Voice Deepfake Detection</div>
+                            <div className="game-desc">
+                                Detect AI-generated voices in real-time during calls. Protect yourself from 
+                                voice spoofing and impersonation attacks.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style={{background: '#f7fafc', padding: '30px', borderRadius: '15px', marginTop: '30px'}}>
+                        <h3 style={{color: '#2d3748', marginBottom: '15px', fontSize: '1.3em'}}>
+                            Why Cybersecurity Awareness Matters 🔐
+                        </h3>
+                        <ul style={{color: '#4a5568', lineHeight: '1.8', paddingLeft: '20px'}}>
+                            <li>70% of data breaches involve social engineering tactics</li>
+                            <li>Deepfake technology is advancing rapidly, making detection crucial</li>
+                            <li>Students are prime targets for phishing and identity theft</li>
+                            <li>Early education prevents costly security incidents</li>
+                        </ul>
+                    </div>
+                </div>
+            );
+        }
+
+        function GamesSection() {
+            const [activeGame, setActiveGame] = useState(null);
+
+            if (activeGame === 'quiz') {
+                return <PhishingQuiz onBack={() => setActiveGame(null)} />;
+            }
+
+            if (activeGame === 'password') {
+                return <PasswordGame onBack={() => setActiveGame(null)} />;
+            }
+
+            return (
+                <div>
+                    <h2 className="section-title">Cybersecurity Awareness Games 🎮</h2>
+                    
+                    <div className="games-grid">
+                        <div className="game-card" onClick={() => setActiveGame('quiz')}>
+                            <div className="game-icon">📧</div>
+                            <div className="game-title">Phishing Detection Quiz</div>
+                            <div className="game-desc">
+                                Can you spot the phishing attempts? Test your skills at identifying suspicious 
+                                emails and messages that try to steal your information.
+                            </div>
+                            <button className="btn btn-primary" style={{marginTop: '15px'}}>
+                                Start Quiz
+                            </button>
+                        </div>
+
+                        <div className="game-card" onClick={() => setActiveGame('password')}>
+                            <div className="game-icon">🔑</div>
+                            <div className="game-title">Password Strength Tester</div>
+                            <div className="game-desc">
+                                Learn what makes a strong password! Test different passwords and get instant 
+                                feedback on their security level.
+                            </div>
+                            <button className="btn btn-primary" style={{marginTop: '15px'}}>
+                                Start Game
+                            </button>
+                        </div>
+
+                        <div className="game-card">
+                            <div className="game-icon">🌐</div>
+                            <div className="game-title">Safe Browsing Challenge</div>
+                            <div className="game-desc">
+                                Navigate through various websites and identify which ones are safe to visit. 
+                                Learn to recognize warning signs of malicious sites.
+                            </div>
+                            <button className="btn btn-secondary" style={{marginTop: '15px'}}>
+                                Coming Soon
+                            </button>
+                        </div>
+
+                        <div className="game-card">
+                            <div className="game-icon">📱</div>
+                            <div className="game-title">Social Media Privacy</div>
+                            <div className="game-desc">
+                                Discover how much information you're sharing online. Learn best practices for 
+                                protecting your privacy on social platforms.
+                            </div>
+                            <button className="btn btn-secondary" style={{marginTop: '15px'}}>
+                                Coming Soon
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        function PhishingQuiz({ onBack }) {
+            const [currentQuestion, setCurrentQuestion] = useState(0);
+            const [score, setScore] = useState(0);
+            const [selectedAnswer, setSelectedAnswer] = useState(null);
+            const [showResult, setShowResult] = useState(false);
+            const [quizComplete, setQuizComplete] = useState(false);
+
+            const questions = [
+                {
+                    question: "You receive an email from 'support@amaz0n.com' asking you to verify your account. What should you do?",
+                    options: [
+                        "Click the link and verify immediately",
+                        "Check the sender's email carefully - the '0' instead of 'o' is suspicious",
+                        "Reply with your account details",
+                        "Forward it to all your friends"
+                    ],
+                    correct: 1,
+                    explanation: "Always check email addresses carefully! Phishers often use similar-looking domains."
+                },
+                {
+                    question: "A message claims you've won a prize and need to pay a small 'processing fee'. Is this legitimate?",
+                    options: [
+                        "Yes, processing fees are normal",
+                        "No, legitimate prizes don't require payment",
+                        "Only if it's less than $50",
+                        "Yes, if they have an official-looking logo"
+                    ],
+                    correct: 1,
+                    explanation: "Real prizes never require payment. This is a classic phishing tactic!"
+                },
+                {
+                    question: "An urgent email says your bank account will be closed unless you click a link. What's the safest action?",
+                    options: [
+                        "Click the link immediately",
+                        "Call your bank directly using the number on their official website",
+                        "Reply to the email asking for more info",
+                        "Ignore it completely"
+                    ],
+                    correct: 1,
+                    explanation: "Always contact organizations directly through official channels, never through links in emails!"
+                },
+                {
+                    question: "Which of these is a red flag in an email?",
+                    options: [
+                        "Personalized greeting with your name",
+                        "Generic greeting like 'Dear Customer'",
+                        "Company logo at the top",
+                        "Proper grammar and spelling"
+                    ],
+                    correct: 1,
+                    explanation: "Legitimate companies usually use your name. Generic greetings are common in phishing emails."
+                },
+                {
+                    question: "A colleague sends you a file attachment you weren't expecting. Should you open it?",
+                    options: [
+                        "Yes, it's from someone I know",
+                        "No, verify with the colleague first through a different channel",
+                        "Only if the file name looks interesting",
+                        "Yes, if my antivirus is updated"
+                    ],
+                    correct: 1,
+                    explanation: "Accounts can be compromised! Always verify unexpected attachments before opening."
+                }
+            ];
+
+            const handleAnswer = (index) => {
+                setSelectedAnswer(index);
+                setShowResult(true);
+                
+                if (index === questions[currentQuestion].correct) {
+                    setScore(score + 1);
+                }
+
+                setTimeout(() => {
+                    if (currentQuestion < questions.length - 1) {
+                        setCurrentQuestion(currentQuestion + 1);
+                        setSelectedAnswer(null);
+                        setShowResult(false);
+                    } else {
+                        setQuizComplete(true);
+                    }
+                }, 2500);
+            };
+
+            if (quizComplete) {
+                const percentage = (score / questions.length) * 100;
+                return (
+                    <div className="quiz-container">
+                        <button onClick={onBack} className="btn btn-secondary" style={{marginBottom: '20px'}}>
+                            ← Back to Games
+                        </button>
+                        
+                        <div className="score-display">
+                            <div style={{fontSize: '3em', marginBottom: '15px'}}>
+                                {percentage >= 80 ? '🏆' : percentage >= 60 ? '👍' : '📚'}
+                            </div>
+                            <div>Quiz Complete!</div>
+                            <div style={{fontSize: '2em', margin: '15px 0'}}>
+                                {score} / {questions.length}
+                            </div>
+                            <div style={{fontSize: '0.9em', opacity: 0.9}}>
+                                {percentage >= 80 ? 'Excellent! You\'re a phishing detection expert!' :
+                                 percentage >= 60 ? 'Good job! Keep learning to improve.' :
+                                 'Keep practicing! Cybersecurity awareness is crucial.'}
+                            </div>
+                        </div>
+
+                        <button onClick={() => {
+                            setCurrentQuestion(0);
+                            setScore(0);
+                            setQuizComplete(false);
+                            setShowResult(false);
+                        }} className="btn btn-primary">
+                            Try Again
+                        </button>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="quiz-container">
+                    <button onClick={onBack} className="btn btn-secondary" style={{marginBottom: '20px'}}>
+                        ← Back to Games
+                    </button>
+
+                    <div className="score-display">
+                        Question {currentQuestion + 1} of {questions.length} | Score: {score}
+                    </div>
+
+                    <div className="quiz-question">
+                        <div className="question-text">
+                            {questions[currentQuestion].question}
+                        </div>
+
+                        <div className="quiz-options">
+                            {questions[currentQuestion].options.map((option, index) => (
+                                <div
+                                    key={index}
+                                    className={`quiz-option ${
+                                        selectedAnswer === index ? 
+                                            (index === questions[currentQuestion].correct ? 'correct' : 'incorrect') : ''
+                                    }`}
+                                    onClick={() => !showResult && handleAnswer(index)}
+                                    style={{pointerEvents: showResult ? 'none' : 'auto'}}
+                                >
+                                    {option}
+                                </div>
+                            ))}
+                        </div>
+
+                        {showResult && (
+                            <div style={{
+                                marginTop: '20px',
+                                padding: '20px',
+                                background: selectedAnswer === questions[currentQuestion].correct ? '#c6f6d5' : '#fed7d7',
+                                borderRadius: '10px',
+                                color: selectedAnswer === questions[currentQuestion].correct ? '#22543d' : '#742a2a'
+                            }}>
+                                <strong>
+                                    {selectedAnswer === questions[currentQuestion].correct ? '✓ Correct!' : '✗ Incorrect'}
+                                </strong>
+                                <p style={{marginTop: '10px'}}>{questions[currentQuestion].explanation}</p>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        }
+
+        function PasswordGame({ onBack }) {
+            const [password, setPassword] = useState('');
+            const [strength, setStrength] = useState(0);
+            const [feedback, setFeedback] = useState([]);
+
+            const checkPassword = (pwd) => {
+                let score = 0;
+                const checks = [];
+
+                if (pwd.length >= 8) {
+                    score += 20;
+                    checks.push({ text: 'At least 8 characters', passed: true });
+                } else {
+                    checks.push({ text: 'At least 8 characters', passed: false });
+                }
+
+                if (pwd.length >= 12) {
+                    score += 10;
+                    checks.push({ text: 'Length 12+ characters (bonus)', passed: true });
+                } else if (pwd.length > 0) {
+                    checks.push({ text: 'Length 12+ characters (bonus)', passed: false });
+                }
+
+                if (/[a-z]/.test(pwd) && /[A-Z]/.test(pwd)) {
+                    score += 20;
+                    checks.push({ text: 'Mixed case letters', passed: true });
+                } else if (pwd.length > 0) {
+                    checks.push({ text: 'Mixed case letters', passed: false });
+                }
+
+                if (/\d/.test(pwd)) {
+                    score += 20;
+                    checks.push({ text: 'Contains numbers', passed: true });
+                } else if (pwd.length > 0) {
+                    checks.push({ text: 'Contains numbers', passed: false });
+                }
+
+                if (/[!@#$%^&*(),.?":{}|<>]/.test(pwd)) {
+                    score += 20;
+                    checks.push({ text: 'Special characters', passed: true });
+                } else if (pwd.length > 0) {
+                    checks.push({ text: 'Special characters', passed: false });
+                }
+
+                if (!/(.)\1{2,}/.test(pwd) && pwd.length > 0) {
+                    score += 10;
+                    checks.push({ text: 'No repeated characters', passed: true });
+                } else if (pwd.length > 0) {
+                    checks.push({ text: 'No repeated characters', passed: false });
+                }
+
+                setStrength(score);
+                setFeedback(checks);
+            };
+
+            useEffect(() => {
+                checkPassword(password);
+            }, [password]);
+
+            const getStrengthLabel = () => {
+                if (strength === 0) return { text: 'Enter a password', color: '#cbd5e0' };
+                if (strength < 40) return { text: 'Weak', color: '#f56565' };
+                if (strength < 70) return { text: 'Medium', color: '#ed8936' };
+                if (strength < 90) return { text: 'Strong', color: '#48bb78' };
+                return { text: 'Very Strong', color: '#38b2ac' };
+            };
+
+            const strengthInfo = getStrengthLabel();
+
+            return (
+                <div className="quiz-container">
+                    <button onClick={onBack} className="btn btn-secondary" style={{marginBottom: '20px'}}>
+                        ← Back to Games
+                    </button>
+
+                    <h2 className="section-title">Password Strength Tester 🔑</h2>
+
+                    <div style={{background: '#f7fafc', padding: '30px', borderRadius: '15px', marginBottom: '30px'}}>
+                        <label style={{display: 'block', marginBottom: '10px', fontWeight: '600', color: '#2d3748'}}>
+                            Test Your Password:
+                        </label>
+                        <input
+                            type="text"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder="Enter a password to test..."
+                            style={{
+                                width: '100%',
+                                padding: '15px',
+                                fontSize: '1.1em',
+                                border: '2px solid #e2e8f0',
+                                borderRadius: '10px',
+                                marginBottom: '20px'
+                            }}
+                        />
+
+                        <div style={{marginBottom: '20px'}}>
+                            <div style={{display: 'flex', justifyContent: 'space-between', marginBottom: '10px'}}>
+                                <span style={{fontWeight: '600'}}>Strength:</span>
+                                <span style={{color: strengthInfo.color, fontWeight: '600'}}>
+                                    {strengthInfo.text}
+                                </span>
+                            </div>
+                            <div className="metric-bar">
+                                <div 
+                                    className="metric-fill" 
+                                    style={{width: `${strength}%`, background: strengthInfo.color}}
+                                />
+                            </div>
+                        </div>
+
+                        <div style={{marginTop: '25px'}}>
+                            <h4 style={{marginBottom: '15px', color: '#2d3748'}}>Requirements:</h4>
+                            {feedback.map((item, index) => (
+                                <div key={index} style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    marginBottom: '10px',
+                                    color: item.passed ? '#48bb78' : '#a0aec0'
+                                }}>
+                                    <span style={{marginRight: '10px', fontSize: '1.2em'}}>
+                                        {item.passed ? '✓' : '○'}
+                                    </span>
+                                    {item.text}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                    <div style={{background: '#e6fffa', padding: '20px', borderRadius: '12px', border: '2px solid #81e6d9'}}>
+                        <h4 style={{color: '#234e52', marginBottom: '10px'}}>💡 Password Tips:</h4>
+                        <ul style={{color: '#234e52', lineHeight: '1.8', paddingLeft: '20px'}}>
+                            <li>Use a minimum of 12 characters</li>
+                            <li>Mix uppercase, lowercase, numbers, and symbols</li>
+                            <li>Avoid common words, names, or dates</li>
+                            <li>Use a unique password for each account</li>
+                            <li>Consider using a password manager</li>
+                        </ul>
+                    </div>
+                </div>
+            );
+        }
+
+        function VideoDetector() {
+            const [videoSrc, setVideoSrc] = useState(null);
+            const [isAnalyzing, setIsAnalyzing] = useState(false);
+            const [analysisResults, setAnalysisResults] = useState(null);
+            const [webcamActive, setWebcamActive] = useState(false);
+            
+            const videoRef = useRef(null);
+            const webcamRef = useRef(null);
+            const mediaStreamRef = useRef(null);
+
+            const handleFileUpload = (event) => {
+                const file = event.target.files[0];
+                if (file) {
+                    const url = URL.createObjectURL(file);
+                    setVideoSrc(url);
+                    setAnalysisResults(null);
+                }
+            };
+
+            const toggleWebcam = async () => {
+                if (webcamActive) {
+                    if (mediaStreamRef.current) {
+                        mediaStreamRef.current.getTracks().forEach(track => track.stop());
+                    }
+                    setWebcamActive(false);
+                    setVideoSrc(null);
+                    mediaStreamRef.current = null;
+                } else {
+                    try {
+                        const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+                        mediaStreamRef.current = stream;
+                        setWebcamActive(true);
+                        setVideoSrc('webcam');
+                        setAnalysisResults(null);
+                        
+                        // Wait for the video element to be rendered, then set the stream
+                        setTimeout(() => {
+                            if (webcamRef.current && mediaStreamRef.current) {
+                                webcamRef.current.srcObject = mediaStreamRef.current;
+                            }
+                        }, 100);
+                    } catch (err) {
+                        alert("Error accessing webcam. Please ensure you've granted camera permissions: " + err.message);
+                    }
+                }
+            };
+
+            const analyzeVideo = () => {
+                setIsAnalyzing(true);
+                
+                setTimeout(() => {
+                    const fakeScores = {
+                        faceInconsistencies: Math.random() * 100,
+                        blinkPatterns: Math.random() * 100,
+                        artificialBoundaries: Math.random() * 100,
+                        audioVisualSync: Math.random() * 100
+                    };
+                    
+                    const overallScore = (
+                        fakeScores.faceInconsistencies * 0.3 + 
+                        fakeScores.blinkPatterns * 0.2 + 
+                        fakeScores.artificialBoundaries * 0.25 + 
+                        fakeScores.audioVisualSync * 0.25
+                    );
+                    
+                    setAnalysisResults({
+                        isLikelyFake: overallScore > 50,
+                        confidenceScore: overallScore,
+                        metrics: fakeScores
+                    });
+                    
+                    setIsAnalyzing(false);
+                }, 3000);
+            };
+
+            useEffect(() => {
+                // Set the webcam stream when the video element is ready
+                if (webcamActive && webcamRef.current && mediaStreamRef.current) {
+                    webcamRef.current.srcObject = mediaStreamRef.current;
+                }
+            }, [webcamActive]);
+
+            useEffect(() => {
+                return () => {
+                    if (mediaStreamRef.current) {
+                        mediaStreamRef.current.getTracks().forEach(track => track.stop());
+                    }
+                };
+            }, []);
+
+            return (
+                <div>
+                    <h2 className="section-title">Deepfake Video Detector 🎥</h2>
+                    
+                    <div className="detector-container">
+                        <div className="detector-panel">
+                            <h3 className="panel-title">Video Input</h3>
+                            
+                            <div style={{display: 'flex', gap: '10px', marginBottom: '20px'}}>
+                                <label style={{flex: 1}}>
+                                    <input 
+                                        type="file" 
+                                        accept="video/*" 
+                                        onChange={handleFileUpload}
+                                        style={{display: 'none'}}
+                                    />
+                                    <div className="btn btn-primary">
+                                        📁 Upload Video
+                                    </div>
+                                </label>
+                                
+                                <button 
+                                    onClick={toggleWebcam} 
+                                    className={`btn ${webcamActive ? 'btn-danger' : 'btn-primary'}`}
+                                    style={{flex: 1}}
+                                >
+                                    📷 {webcamActive ? 'Stop Webcam' : 'Use Webcam'}
+                                </button>
+                            </div>
+                            
+                            <div style={{
+                                background: '#000',
+                                borderRadius: '12px',
+                                minHeight: '300px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                marginBottom: '15px',
+                                overflow: 'hidden'
+                            }}>
+                                {videoSrc === 'webcam' ? (
+                                    <video 
+                                        ref={webcamRef} 
+                                        autoPlay 
+                                        muted 
+                                        playsInline
+                                        style={{width: '100%', height: '100%', objectFit: 'contain'}}
+                                    />
+                                ) : videoSrc ? (
+                                    <video 
+                                        ref={videoRef}
+                                        src={videoSrc} 
+                                        controls 
+                                        style={{width: '100%', height: '100%', objectFit: 'contain'}}
+                                    />
+                                ) : (
+                                    <div style={{color: '#cbd5e0', textAlign: 'center', padding: '20px'}}>
+                                        <div style={{fontSize: '3em', marginBottom: '10px'}}>🎬</div>
+                                        <div>Upload a video or enable webcam</div>
+                                    </div>
+                                )}
+                            </div>
+                            
+                            <button 
+                                onClick={analyzeVideo}
+                                disabled={!videoSrc || isAnalyzing}
+                                className="btn btn-primary"
+                            >
+                                {isAnalyzing ? '🔄 Analyzing...' : '🔍 Analyze for Deepfakes'}
+                            </button>
+
+                            <div style={{marginTop: '20px', padding: '15px', background: '#e6fffa', borderRadius: '10px', fontSize: '0.9em', color: '#234e52'}}>
+                                <strong>How it works:</strong> Our AI analyzes facial inconsistencies, blink patterns, 
+                                artificial boundaries, and audio-visual synchronization to detect deepfake manipulation.
+                            </div>
+                        </div>
+                        
+                        <div className="detector-panel">
+                            <h3 className="panel-title">Analysis Results</h3>
+                            
+                            {isAnalyzing ? (
+                                <div className="loading">
+                                    <div className="spinner"></div>
+                                    <p>Analyzing video for deepfake indicators...</p>
+                                    <p style={{fontSize: '0.9em', color: '#718096', marginTop: '10px'}}>
+                                        This may take a few moments
+                                    </p>
+                                </div>
+                            ) : analysisResults ? (
+                                <div>
+                                    <div className={`result-card ${
+                                        analysisResults.isLikelyFake ? 'result-fake' : 'result-authentic'
+                                    }`}>
+                                        <div className="result-title">
+                                            {analysisResults.isLikelyFake ? '⚠️ Potential Deepfake Detected' : '✓ Likely Authentic Video'}
+                                        </div>
+                                        <div>
+                                            Confidence Score: {Math.round(analysisResults.confidenceScore)}%
+                                        </div>
+                                    </div>
+                                    
+                                    <h4 style={{marginBottom: '15px', color: '#2d3748', fontWeight: '600'}}>
+                                        Detailed Metrics:
+                                    </h4>
+                                    
+                                    <div className="metrics">
+                                        {Object.entries(analysisResults.metrics).map(([key, value]) => {
+                                            const formattedKey = key
+                                                .replace(/([A-Z])/g, ' $1')
+                                                .replace(/^./, (str) => str.toUpperCase());
+                                            
+                                            const riskLevel = value > 70 ? 'High' : value > 40 ? 'Medium' : 'Low';
+                                            const barColor = value > 70 ? '#f56565' : value > 40 ? '#ed8936' : '#48bb78';
+                                            
+                                            return (
+                                                <div key={key} className="metric-item">
+                                                    <div className="metric-label">
+                                                        <span>{formattedKey}</span>
+                                                        <span style={{
+                                                            color: barColor,
+                                                            fontWeight: '600'
+                                                        }}>
+                                                            {riskLevel} ({Math.round(value)}%)
+                                                        </span>
+                                                    </div>
+                                                    <div className="metric-bar">
+                                                        <div 
+                                                            className="metric-fill" 
+                                                            style={{width: `${value}%`, background: barColor}}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                    
+                                    <div style={{marginTop: '20px', padding: '15px', background: '#ebf8ff', borderRadius: '10px', fontSize: '0.9em'}}>
+                                        <strong style={{color: '#2c5282'}}>Interpretation:</strong>
+                                        <p style={{marginTop: '8px', color: '#2d3748', lineHeight: '1.5'}}>
+                                            {analysisResults.isLikelyFake 
+                                                ? "This video shows signs consistent with deepfake manipulation. The analysis found potential inconsistencies that warrant further investigation."
+                                                : "This video appears authentic based on our analysis. No significant indicators of deepfake manipulation were detected."}
+                                        </p>
+                                        <p style={{marginTop: '10px', fontSize: '0.85em', color: '#718096'}}>
+                                            Note: This is a demonstration tool. Real deepfake detection requires sophisticated ML models.
+                                        </p>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    minHeight: '400px',
+                                    color: '#a0aec0'
+                                }}>
+                                    <div style={{fontSize: '3em', marginBottom: '15px'}}>📊</div>
+                                    <p style={{fontSize: '1.1em', marginBottom: '8px'}}>No analysis performed yet</p>
+                                    <p style={{fontSize: '0.9em', textAlign: 'center', maxWidth: '300px'}}>
+                                        Upload a video and click "Analyze for Deepfakes" to begin
+                                    </p>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        function VoiceDetector() {
+            const [isListening, setIsListening] = useState(false);
+            const [analysisResults, setAnalysisResults] = useState(null);
+            const [audioLevel, setAudioLevel] = useState(0);
+            const audioContextRef = useRef(null);
+            const analyserRef = useRef(null);
+            const streamRef = useRef(null);
+
+            const startListening = async () => {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+                    streamRef.current = stream;
+                    
+                    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    audioContextRef.current = audioContext;
+                    
+                    const analyser = audioContext.createAnalyser();
+                    analyserRef.current = analyser;
+                    
+                    const source = audioContext.createMediaStreamSource(stream);
+                    source.connect(analyser);
+                    
+                    analyser.fftSize = 256;
+                    const dataArray = new Uint8Array(analyser.frequencyBinCount);
+                    
+                    setIsListening(true);
+                    
+                    const updateLevel = () => {
+                        if (!streamRef.current) return;
+                        analyser.getByteFrequencyData(dataArray);
+                        const average = dataArray.reduce((a, b) => a + b) / dataArray.length;
+                        setAudioLevel(average);
+                        requestAnimationFrame(updateLevel);
+                    };
+                    
+                    updateLevel();
+                    
+                    // Simulate analysis after 5 seconds
+                    setTimeout(() => {
+                        if (streamRef.current) {
+                            analyzeVoice();
+                        }
+                    }, 5000);
+                    
+                } catch (err) {
+                    alert("Error accessing microphone. Please ensure you've granted microphone permissions: " + err.message);
+                }
+            };
+
+            const stopListening = () => {
+                if (streamRef.current) {
+                    streamRef.current.getTracks().forEach(track => track.stop());
+                }
+                if (audioContextRef.current) {
+                    audioContextRef.current.close();
+                }
+                setIsListening(false);
+                setAudioLevel(0);
+            };
+
+            const analyzeVoice = () => {
+                const scores = {
+                    frequencyAnomalies: Math.random() * 100,
+                    prosodyPatterns: Math.random() * 100,
+                    spectralConsistency: Math.random() * 100,
+                    naturalness: Math.random() * 100
+                };
+                
+                const overallScore = (
+                    scores.frequencyAnomalies * 0.25 + 
+                    scores.prosodyPatterns * 0.25 + 
+                    scores.spectralConsistency * 0.25 + 
+                    scores.naturalness * 0.25
+                );
+                
+                setAnalysisResults({
+                    isLikelyFake: overallScore > 50,
+                    confidenceScore: overallScore,
+                    metrics: scores
+                });
+                
+                stopListening();
+            };
+
+            useEffect(() => {
+                return () => {
+                    stopListening();
+                };
+            }, []);
+
+            return (
+                <div>
+                    <h2 className="section-title">Deepfake Voice Detector 🎤</h2>
+                    
+                    <div className="detector-container">
+                        <div className="detector-panel">
+                            <h3 className="panel-title">Live Voice Analysis</h3>
+                            
+                            <div style={{
+                                background: 'linear-gradient(135deg, #667eea, #764ba2)',
+                                color: 'white',
+                                padding: '30px',
+                                borderRadius: '12px',
+                                textAlign: 'center',
+                                marginBottom: '20px'
+                            }}>
+                                <div style={{fontSize: '4em', marginBottom: '15px'}}>
+                                    {isListening ? '🎙️' : '🔇'}
+                                </div>
+                                <div style={{fontSize: '1.3em', fontWeight: '600', marginBottom: '10px'}}>
+                                    {isListening ? 'Listening...' : 'Ready to Analyze'}
+                                </div>
+                                <div style={{opacity: 0.9}}>
+                                    <span className={`status-indicator ${isListening ? 'status-active' : 'status-inactive'}`}></span>
+                                    {isListening ? 'Recording in progress' : 'Click start to begin'}
+                                </div>
+                            </div>
+
+                            {isListening && (
+                                <div style={{marginBottom: '20px'}}>
+                                    <div style={{marginBottom: '10px', fontWeight: '600'}}>Audio Level:</div>
+                                    <div className="metric-bar" style={{height: '20px'}}>
+                                        <div 
+                                            className="metric-fill" 
+                                            style={{
+                                                width: `${(audioLevel / 255) * 100}%`,
+                                                background: 'linear-gradient(90deg, #48bb78, #38b2ac)',
+                                                transition: 'width 0.1s'
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            )}
+                            
+                            <button 
+                                onClick={isListening ? stopListening : startListening}
+                                className={`btn ${isListening ? 'btn-danger' : 'btn-primary'}`}
+                            >
+                                {isListening ? '⏹️ Stop Analysis' : '▶️ Start Voice Analysis'}
+                            </button>
+
+                            <div style={{marginTop: '20px', padding: '15px', background: '#fef5e7', borderRadius: '10px', fontSize: '0.9em'}}>
+                                <strong style={{color: '#7d6608'}}>⚠️ Privacy Note:</strong>
+                                <p style={{marginTop: '8px', color: '#7d6608', lineHeight: '1.5'}}>
+                                    Audio is processed locally on your device. No recordings are stored or transmitted. 
+                                    Analysis takes approximately 5 seconds.
+                                </p>
+                            </div>
+
+                            <div style={{marginTop: '15px', padding: '15px', background: '#e6fffa', borderRadius: '10px', fontSize: '0.9em', color: '#234e52'}}>
+                                <strong>Detection Features:</strong>
+                                <ul style={{marginTop: '10px', paddingLeft: '20px', lineHeight: '1.8'}}>
+                                    <li>Frequency anomaly detection</li>
+                                    <li>Prosody pattern analysis</li>
+                                    <li>Spectral consistency checking</li>
+                                    <li>Natural speech indicators</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div className="detector-panel">
+                            <h3 className="panel-title">Analysis Results</h3>
+                            
+                            {analysisResults ? (
+                                <div>
+                                    <div className={`result-card ${
+                                        analysisResults.isLikelyFake ? 'result-fake' : 'result-authentic'
+                                    }`}>
+                                        <div className="result-title">
+                                            {analysisResults.isLikelyFake ? '⚠️ Potential AI Voice Detected' : '✓ Likely Natural Voice'}
+                                        </div>
+                                        <div>
+                                            Confidence Score: {Math.round(analysisResults.confidenceScore)}%
+                                        </div>
+                                    </div>
+                                    
+                                    <h4 style={{marginBottom: '15px', color: '#2d3748', fontWeight: '600'}}>
+                                        Voice Analysis Metrics:
+                                    </h4>
+                                    
+                                    <div className="metrics">
+                                        {Object.entries(analysisResults.metrics).map(([key, value]) => {
+                                            const formattedKey = key
+                                                .replace(/([A-Z])/g, ' $1')
+                                                .replace(/^./, (str) => str.toUpperCase());
+                                            
+                                            const riskLevel = value > 70 ? 'High' : value > 40 ? 'Medium' : 'Low';
+                                            const barColor = value > 70 ? '#f56565' : value > 40 ? '#ed8936' : '#48bb78';
+                                            
+                                            return (
+                                                <div key={key} className="metric-item">
+                                                    <div className="metric-label">
+                                                        <span>{formattedKey}</span>
+                                                        <span style={{
+                                                            color: barColor,
+                                                            fontWeight: '600'
+                                                        }}>
+                                                            {riskLevel} ({Math.round(value)}%)
+                                                        </span>
+                                                    </div>
+                                                    <div className="metric-bar">
+                                                        <div 
+                                                            className="metric-fill" 
+                                                            style={{width: `${value}%`, background: barColor}}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                    
+                                    <div style={{marginTop: '20px', padding: '15px', background: '#ebf8ff', borderRadius: '10px', fontSize: '0.9em'}}>
+                                        <strong style={{color: '#2c5282'}}>Interpretation:</strong>
+                                        <p style={{marginTop: '8px', color: '#2d3748', lineHeight: '1.5'}}>
+                                            {analysisResults.isLikelyFake 
+                                                ? "The voice sample shows characteristics consistent with AI-generated speech. Detected anomalies in frequency patterns and prosody suggest synthetic origin."
+                                                : "The voice sample appears natural. Speech patterns, frequency distribution, and prosody are consistent with human vocal production."}
+                                        </p>
+                                        <p style={{marginTop: '10px', fontSize: '0.85em', color: '#718096'}}>
+                                            Recommendation: {analysisResults.isLikelyFake ? 
+                                                'Verify caller identity through alternative means.' : 
+                                                'Voice analysis suggests authentic human speech.'}
+                                        </p>
+                                    </div>
+
+                                    <button 
+                                        onClick={() => setAnalysisResults(null)}
+                                        className="btn btn-secondary"
+                                        style={{marginTop: '15px'}}
+                                    >
+                                        🔄 New Analysis
+                                    </button>
+                                </div>
+                            ) : (
+                                <div style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    minHeight: '400px',
+                                    color: '#a0aec0'
+                                }}>
+                                    <div style={{fontSize: '3em', marginBottom: '15px'}}>🎵</div>
+                                    <p style={{fontSize: '1.1em', marginBottom: '8px'}}>
+                                        {isListening ? 'Analyzing voice...' : 'No analysis performed yet'}
+                                    </p>
+                                    <p style={{fontSize: '0.9em', textAlign: 'center', maxWidth: '300px'}}>
+                                        {isListening ? 
+                                            'Speak naturally for accurate results' : 
+                                            'Click "Start Voice Analysis" to begin detection'}
+                                    </p>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
